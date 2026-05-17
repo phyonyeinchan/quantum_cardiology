@@ -1,30 +1,36 @@
+import os
+import sys
+
+# ၁။ Streamlit စနစ်နှင့် မငြိစွန်းစေရန် Qiskit Packages များကို Runtime တွင် အလိုအလျောက် သီးသန့်သွင်းယူခြင်း
+try:
+    import qiskit
+    from qiskit_machine_learning.algorithms import VQC
+except ImportError:
+    # Packages မရှိပါက နောက်ကွယ်မှ တိတ်တဆိတ် သွင်းယူခိုင်းခြင်း
+    os.system(f"{sys.executable} -m pip install qiskit qiskit-machine-learning qiskit-algorithms")
+
+# ၎င်းနောက်မှ ကျန်ရှိသော Standard Libraries များကို ဆက်လက် ခေါ်ယူခြင်း
 import streamlit as st
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from qiskit.circuit.library import ZZFeatureMap, RealAmplitudes
-from qiskit_machine_learning.algorithms import VQC
 from qiskit_algorithms.optimizers import COBYLA
 
-# ၁။ Web App ၏ ခေါင်းစဉ်နှင့် မျက်နှာစာ အလှဆင်ခြင်း
+# ၂။ Web App ၏ ခေါင်းစဉ်နှင့် မျက်နှာစာ အလှဆင်ခြင်း
 st.set_page_config(page_title="Quantum Cardiology Dashboard", layout="wide")
 st.title("⚛️ Quantum AI Cardiology Dashboard")
 st.write("Causal Inference & Propensity Score Estimation using Variational Quantum Classifier (VQC)")
 
-# ၂။ Background မှာ Data နှင့် Quantum Model ကို တစ်ခါတည်း Train ထားခြင်း
+# ၃။ Background မှာ Data နှင့် Quantum Model ကို တစ်ခါတည်း Train ထားခြင်း
 @st.cache_resource
 def train_quantum_model():
-    # ပိုမိုစိတ်ချရသော GitHub Raw Link သို့ ပြောင်းလဲထားပါသည်
     url = "https://githubusercontent.com"
-    # အင်တာနက် URL အစား မိမိစက်ထဲက ဒေါင်းလုဒ်လုပ်ထားတဲ့ ဖိုင်အမည်ကို တိုက်ရိုက်ပြောင်းရေးခြင်း
-    df = pd.read_csv("heart_failure_clinical_records_dataset.csv")
-    
-    X_features = [
-        'age', 'anaemia', 'creatinine_phosphokinase', 'diabetes',
-        'ejection_fraction', 'platelets', 'serum_creatinine',
-        'serum_sodium', 'sex', 'smoking'
-    ]
+    df = pd.read_csv(url)
+    X_features = ['age', 'anaemia', 'creatinine_phosphokinase', 'diabetes', 
+                  'ejection_fraction', 'platelets', 'serum_creatinine', 
+                  'serum_sodium', 'sex', 'smoking']
     
     X = df[X_features]
     w = df['high_blood_pressure'] # Treatment
@@ -33,7 +39,7 @@ def train_quantum_model():
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
     
-    num_qubits = X_train_scaled.shape[1]
+    num_qubits = X_train_scaled.shape
     feature_map = ZZFeatureMap(feature_dimension=num_qubits, reps=1, entanglement='linear')
     ansatz = RealAmplitudes(num_qubits=num_qubits, reps=1)
     
@@ -47,7 +53,7 @@ with st.spinner("Training Quantum Model on Background... Please wait..."):
     vqc, scaler = train_quantum_model()
 st.success("Quantum VQC Model is Ready!")
 
-# ၃။ Sidebar တွင် လူနာအချက်အလက်များကို Interactive ရွေးချယ်နိုင်ရန် ပြုလုပ်ခြင်း
+# ၄။ Sidebar တွင် လူနာအချက်အလက်များကို Interactive ရွေးချယ်နိုင်ရန် ပြုလုပ်ခြင်း
 st.sidebar.header("👤 Patient Clinical Parameters")
 age = st.sidebar.slider("Age (အသက်)", 20, 100, 60)
 anaemia = st.sidebar.selectbox("Anaemia (သွေးအားနည်းရောဂါ)", [0, 1], format_func=lambda x: "No" if x==0 else "Yes")
@@ -60,14 +66,14 @@ ss = st.sidebar.slider("Serum Sodium", 100, 150, 136)
 sex = st.sidebar.selectbox("Sex (ကျား/မ)", [0, 1], format_func=lambda x: "Female" if x==0 else "Male")
 smoking = st.sidebar.selectbox("Smoking (ဆေးလိပ်သောက်ခြင်း)", [0, 1], format_func=lambda x: "No" if x==0 else "Yes")
 
-# ၄။ ရွေးချယ်လိုက်သော လူနာအချက်အလက်ကို Quantum Model ထဲထည့်၍ တွက်ချက်ခြင်း
+# ၅။ ရွေးချယ်လိုက်သော လူနာအချက်အလက်ကို Quantum Model ထဲထည့်၍ တွက်ချက်ခြင်း
 input_data = np.array([[age, anaemia, cpk, diabetes, ef, platelets, sc, ss, sex, smoking]])
 input_scaled = scaler.transform(input_data)
 
 probabilities = vqc.predict_proba(input_scaled)
-propensity_score = probabilities[0][1]
+propensity_score = probabilities[0][1] # တိကျသော Score တန်ဖိုးကို ထုတ်ယူခြင်း
 
-# ၅။ ရလဒ်ကို Dashboard ပေါ်တွင် လှပစွာ ပြသခြင်း
+# ၆။ ရလဒ်ကို Dashboard ပေါ်တွင် လှပစွာ ပြသခြင်း
 col1, col2 = st.columns(2)
 with col1:
     st.metric(label="Estimated Propensity Score (Quantum ML)", value=f"{propensity_score:.4f}")

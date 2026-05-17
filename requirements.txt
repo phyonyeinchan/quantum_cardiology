@@ -1,11 +1,3 @@
 streamlit
 pandas
 scikit-learn
-qiskit
-qiskit-machine-learning
-qiskit-algorithms
-qiskit-optimization
-qiskit-visualization
-matplotlib
-numpy
-scipy
