@@ -4,7 +4,7 @@ This repository applies a **Variational Quantum Classifier (VQC)** using **IBM Q
 
 ## Live Interactive Research Dashboard
 
-[👉 CLICK HERE TO VIEW THE FULL INTERACTIVE REPORT]https://huggingface.co/spaces/phyonyeinchan/quantum-cardiology
+[👉 CLICK HERE TO VIEW THE FULL INTERACTIVE REPORT](https://huggingface.co/spaces/phyonyeinchan/quantum-cardiology)
 
 ## 🎖 Verified IBM Quantum Credentials
 
