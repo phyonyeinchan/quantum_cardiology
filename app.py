@@ -1,4 +1,4 @@
-import streamlit as pd
+import streamlit as st
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -12,10 +12,11 @@ st.set_page_config(page_title="Quantum Cardiology Dashboard", layout="wide")
 st.title("⚛️ Quantum AI Cardiology Dashboard")
 st.write("Causal Inference & Propensity Score Estimation using Variational Quantum Classifier (VQC)")
 
-# ၂။ Background မှာ Data နှင့် Quantum Model ကို တစ်ခါတည်း Train ထားခြင်း (Cache သုံး၍ မြန်ဆန်စေရန်)
+# ၂။ Background မှာ Data နှင့် Quantum Model ကို တစ်ခါတည်း Train ထားခြင်း
 @st.cache_resource
 def train_quantum_model():
-    url = "https://uci.edu"
+    # ပိုမိုစိတ်ချရသော GitHub Raw Link သို့ ပြောင်းလဲထားပါသည်
+    url = "https://githubusercontent.com"
     df = pd.read_csv(url)
     X_features = ['age', 'anaemia', 'creatinine_phosphokinase', 'diabetes', 
                   'ejection_fraction', 'platelets', 'serum_creatinine', 
@@ -59,7 +60,6 @@ smoking = st.sidebar.selectbox("Smoking (ဆေးလိပ်သောက်ခ
 input_data = np.array([[age, anaemia, cpk, diabetes, ef, platelets, sc, ss, sex, smoking]])
 input_scaled = scaler.transform(input_data)
 
-# Propensity Score (သွေးတိုးဖြစ်နိုင်ခြေ/ဆေးသောက်ရနိုင်ခြေ) ကို ခန့်မှန်းခြင်း
 probabilities = vqc.predict_proba(input_scaled)
 propensity_score = probabilities[0][1]
 
