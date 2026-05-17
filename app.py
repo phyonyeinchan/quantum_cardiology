@@ -17,11 +17,14 @@ st.write("Causal Inference & Propensity Score Estimation using Variational Quant
 def train_quantum_model():
     # ပိုမိုစိတ်ချရသော GitHub Raw Link သို့ ပြောင်းလဲထားပါသည်
     url = "https://githubusercontent.com"
-   # အင်တာနက် URL အစား မိမိစက်ထဲက ဒေါင်းလုဒ်လုပ်ထားတဲ့ ဖိုင်အမည်ကို တိုက်ရိုက်ပြောင်းရေးခြင်း
-df = pd.read_csv("heart_failure_clinical_records_dataset.csv")
-    X_features = ['age', 'anaemia', 'creatinine_phosphokinase', 'diabetes', 
-                  'ejection_fraction', 'platelets', 'serum_creatinine', 
-                  'serum_sodium', 'sex', 'smoking']
+    # အင်တာနက် URL အစား မိမိစက်ထဲက ဒေါင်းလုဒ်လုပ်ထားတဲ့ ဖိုင်အမည်ကို တိုက်ရိုက်ပြောင်းရေးခြင်း
+    df = pd.read_csv("heart_failure_clinical_records_dataset.csv")
+    
+    X_features = [
+        'age', 'anaemia', 'creatinine_phosphokinase', 'diabetes',
+        'ejection_fraction', 'platelets', 'serum_creatinine',
+        'serum_sodium', 'sex', 'smoking'
+    ]
     
     X = df[X_features]
     w = df['high_blood_pressure'] # Treatment
