@@ -1,3 +1,13 @@
+---
+title: Quantum Cardiology
+emoji: ⚛️
+colorFrom: blue
+colorTo: indigo
+sdk: streamlit
+app_file: app.py
+pinned: false
+---
+
 # Quantum Machine Learning for Causal Inference in Cardiovascular Epidemiology
 
 This repository applies a **Variational Quantum Classifier (VQC)** using **IBM Qiskit** to estimate propensity scores for causal inference, utilizing clinical records of heart failure patients. This methodology provides a quantum-enhanced approach to risk stratification and confounding adjustment in observational epidemiological data.

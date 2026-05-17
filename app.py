@@ -16,7 +16,7 @@ st.write("Causal Inference & Propensity Score Estimation using Variational Quant
 @st.cache_resource
 def train_quantum_model():
     url = "https://githubusercontent.com"
-    df = pd.read_csv(url)
+    df = pd.read_csv("heart_failure_clinical_records_dataset.csv")
     X_features = ['age', 'anaemia', 'creatinine_phosphokinase', 'diabetes', 
                   'ejection_fraction', 'platelets', 'serum_creatinine', 
                   'serum_sodium', 'sex', 'smoking']
@@ -59,8 +59,9 @@ smoking = st.sidebar.selectbox("Smoking (ဆေးလိပ်သောက်ခ
 input_data = np.array([[age, anaemia, cpk, diabetes, ef, platelets, sc, ss, sex, smoking]])
 input_scaled = scaler.transform(input_data)
 
-probabilities = vqc.predict_proba(input_scaled)
-propensity_score = probabilities[0][1] # တိကျသော Score တန်ဖိုးကို ထုတ်ယူခြင်း
+# vqc.predict_proba အစား Quantum Network ရဲ့ forward pass ကို သုံးပြီး Probability ထုတ်ခြင်း
+probabilities = vqc.neural_network.forward(input_scaled, vqc.weights)
+propensity_score = probabilities[0][1] # Class 1 (Treatment) အတွက် Propensity Score
 
 # ၅။ ရလဒ်ကို Dashboard ပေါ်တွင် လှပစွာ ပြသခြင်း
 col1, col2 = st.columns(2)
