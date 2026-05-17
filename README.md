@@ -26,3 +26,25 @@ pip install qiskit qiskit-machine-learning pandas scikit-learn numpy
 
 ### 2. Execution
 Open the project folder in VS Code and run `quantum_causal_model.ipynb` using your local Jupyter kernel.
+
+## 🎖 Verified IBM Quantum Credentials
+
+<table border="0">
+  <tr>
+    <td>
+      <a href="https://www.credly.com/badges/c13b4d21-4c38-4b28-9128-90fa3984c81d/public_url">
+        <img src="https://images.credly.com/size/220x220/images/6474ba18-3b83-4a34-878d-158e5869a20d/Quantum_20Machine_20Learning.png">
+      </a>
+    </td>
+    <td>
+      <a href="https://www.credly.com/badges/79bc0d5d-81cd-4aaf-8dc8-cb3d28820d70/public_url">
+        <img src="https://images.credly.com/size/220x220/images/60cbe993-f35f-4b98-b7f6-8cd51233fe2a/image.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+
+<a href="https://www.credly.com/badges/c13b4d21-4c38-4b28-9128-90fa3984c81d/public_url">
+  <img src="https://credly.com" width="130" alt="QML Badge">
+</a>
