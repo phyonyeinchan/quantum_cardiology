@@ -2,6 +2,10 @@
 
 This repository applies a **Variational Quantum Classifier (VQC)** using **IBM Qiskit** to estimate propensity scores for causal inference, utilizing clinical records of heart failure patients. This methodology provides a quantum-enhanced approach to risk stratification and confounding adjustment in observational epidemiological data.
 
+## Live Interactive Research Dashboard
+
+[👉 CLICK HERE TO VIEW THE FULL INTERACTIVE REPORT]https://huggingface.co/spaces/phyonyeinchan/quantum-cardiology
+
 ## 🎖 Verified IBM Quantum Credentials
 
 The underlying core competencies driving this research are backed by professional IBM Quantum certifications:
